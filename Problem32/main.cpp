@@ -1,5 +1,5 @@
 #include <iostream>
-
+#include <vector>
 using namespace std;
 
 class Solution{
@@ -28,6 +28,22 @@ public:
                         maxLen=dp[i];
                     }
                 }
+            }
+        }
+        return maxLen;
+    }
+
+    int longestValidParetheses2(string s){
+        int maxLen=0,len=s.length(),lf=0;
+        vector<int> dp(len,0);
+        for(int i=0;i<len;i++){
+            if(s[i]=='(') lf++;
+            else if(lf>0){
+                //here I don't need judge s[i-1-dp[i-1]]=='(',because lf>0.
+                dp[i]=dp[i-1]+2;
+                dp[i]+=i-2-dp[i-1]>=0?dp[i-2-dp[i-1]]:0;
+                if(dp[i]>maxLen) maxLen=dp[i];
+                lf--;
             }
         }
         return maxLen;
